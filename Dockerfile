@@ -17,6 +17,8 @@ FROM alpine:3.11
 
 # Variable arguments to populate labels
 ARG USER=burrow
+ARG UID=1000
+ARG GID=101
 ARG INSTALL_BASE=/usr/local/bin
 
 # Fixed labels according to container label-schema
@@ -29,7 +31,7 @@ LABEL org.label-schema.vcs-url="https://github.com/hyperledger/burrow"
 
 # Run burrow as burrow user; not as root user
 ENV BURROW_PATH /home/$USER
-RUN addgroup -g 101 -S $USER && adduser -S -D -u 1000 $USER $USER
+RUN addgroup -g $GID -S $USER && adduser -S -D -u $UID $USER $USER
 WORKDIR $BURROW_PATH
 
 # Copy binaries built in previous stage
